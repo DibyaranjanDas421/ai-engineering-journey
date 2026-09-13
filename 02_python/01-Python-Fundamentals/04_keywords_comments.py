@@ -1,0 +1,14 @@
+''' age=334
+gpa=9.0
+name="Dibya"
+isPrime=True
+value=None
+print(type(age))
+print(type(gpa))
+print(type(name))
+print(type(isPrime))
+print(type(None)) '''
+
+
+
+# comment

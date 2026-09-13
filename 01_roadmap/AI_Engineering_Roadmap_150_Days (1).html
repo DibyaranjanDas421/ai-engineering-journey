@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Engineering Roadmap — 150 Days</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0c11;
+  --panel:#12151d;
+  --panel-2:#161a24;
+  --border:#232838;
+  --border-soft:#1a1f2c;
+  --text:#e9ebf1;
+  --text-dim:#8b93a7;
+  --text-dimmer:#5b6478;
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Inter',sans-serif;
+  --m1:#f89820; /* Java orange -> start */
+  --m2:#f2734f;
+  --m3:#b968c7;
+  --m4:#6f7ff5;
+  --m5:#22d3ee; /* AI cyan -> end */
+  --radius:14px;
+}
+*{box-sizing:border-box}
+@media (prefers-reduced-motion: reduce){*{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;}}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:var(--sans);background:var(--bg);color:var(--text);
+  background-image:
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(248,152,32,0.10), transparent 60%),
+    radial-gradient(ellipse 900px 600px at 90% 10%, rgba(34,211,238,0.09), transparent 60%);
+}
+
+/* ---------- Header ---------- */
+header{padding:56px 24px 40px;text-align:center;position:relative;overflow:hidden;border-bottom:1px solid var(--border-soft)}
+.eyebrow{
+  font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text-dim);margin:0 0 14px;opacity:0;animation:fadeUp .6s ease forwards;
+}
+h1{
+  margin:0;font-size:clamp(28px,5vw,46px);font-weight:800;letter-spacing:-0.02em;
+  background:linear-gradient(90deg,var(--m1),var(--m2) 25%,var(--m3) 50%,var(--m4) 75%,var(--m5));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  opacity:0;animation:fadeUp .6s ease .08s forwards;
+}
+.subtitle{
+  margin:14px 0 0;color:var(--text-dim);font-size:15px;font-family:var(--mono);
+  opacity:0;animation:fadeUp .6s ease .16s forwards;
+}
+.journey-track{
+  max-width:640px;margin:26px auto 0;height:6px;border-radius:6px;position:relative;
+  background:linear-gradient(90deg,var(--m1),var(--m2) 25%,var(--m3) 50%,var(--m4) 75%,var(--m5));
+  opacity:0;animation:fadeUp .6s ease .24s forwards;
+}
+.journey-labels{display:flex;justify-content:space-between;max-width:640px;margin:8px auto 0;font-family:var(--mono);font-size:11px;color:var(--text-dimmer);opacity:0;animation:fadeUp .6s ease .3s forwards;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ---------- Layout ---------- */
+main{max-width:1180px;margin:0 auto;padding:36px 20px 80px}
+.card{
+  background:var(--panel);border:1px solid var(--border-soft);border-radius:var(--radius);
+  padding:26px;margin:24px 0;box-shadow:0 12px 30px rgba(0,0,0,.35);
+  opacity:0;transform:translateY(14px);animation:cardIn .55s ease forwards;
+}
+.card h2{margin:0 0 4px;font-size:17px;font-weight:700;display:flex;align-items:center;gap:10px}
+.card .card-sub{margin:0 0 20px;color:var(--text-dim);font-size:13px}
+@keyframes cardIn{to{opacity:1;transform:translateY(0)}}
+
+/* ---------- Hero stat row ---------- */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:6px}
+.stat{background:var(--panel-2);border:1px solid var(--border-soft);border-radius:10px;padding:16px;text-align:center}
+.stat .num{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--m5)}
+.stat .lbl{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
+@media (max-width:680px){.stat-row{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------- Today panel ---------- */
+.today-panel{display:flex;gap:20px;align-items:center;flex-wrap:wrap;background:var(--panel-2);border:1px solid var(--border-soft);border-radius:10px;padding:20px}
+.today-day{font-family:var(--mono);font-size:34px;font-weight:800;color:var(--m3);min-width:90px}
+.today-info{flex:1;min-width:220px}
+.today-info .t-title{font-weight:700;font-size:16px;margin:0 0 4px}
+.today-info .t-task{color:var(--text-dim);font-size:13.5px;margin:0}
+.mark-btn{
+  background:linear-gradient(90deg,var(--m3),var(--m5));border:none;color:#0a0c11;font-weight:700;
+  padding:11px 20px;border-radius:8px;cursor:pointer;font-family:var(--sans);font-size:13.5px;
+  transition:transform .15s ease, box-shadow .15s ease;white-space:nowrap;
+}
+.mark-btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(34,211,238,.25)}
+.mark-btn:active{transform:translateY(0)}
+.mark-btn.done{background:#1c2130;color:var(--text-dim);border:1px solid var(--border)}
+
+/* ---------- Progress bar ---------- */
+.progress-wrap{margin-top:18px}
+.progress{height:14px;background:#1a1f2c;border-radius:8px;overflow:hidden;border:1px solid var(--border-soft)}
+.bar{height:100%;width:0;background:linear-gradient(90deg,var(--m1),var(--m3),var(--m5));transition:width .8s cubic-bezier(.22,1,.36,1);position:relative}
+.bar::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);width:40%;animation:shimmer 2.2s linear infinite;}
+@keyframes shimmer{0%{transform:translateX(-120%)}100%{transform:translateX(340%)}}
+.progress-txt{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--mono);font-size:12.5px;color:var(--text-dim)}
+
+/* ---------- Heatmap (signature element) ---------- */
+.heatmap{display:flex;flex-direction:column;gap:9px;overflow-x:auto;padding-bottom:6px}
+.heat-row{display:flex;align-items:center;gap:10px}
+.heat-label{width:150px;flex:0 0 150px;font-family:var(--mono);font-size:11.5px;color:var(--text-dim);text-align:right;padding-right:4px}
+.heat-cells{display:flex;gap:4px}
+.cell{
+  width:16px;height:16px;border-radius:4px;background:#1a1f2c;border:1px solid var(--border-soft);
+  cursor:pointer;position:relative;flex:0 0 auto;
+  transition:transform .12s ease;
+  opacity:0;animation:cellIn .35s ease forwards;
+}
+.cell:hover{transform:scale(1.35);z-index:2;box-shadow:0 0 0 2px rgba(255,255,255,.15)}
+.cell.done{border-color:transparent}
+@keyframes cellIn{to{opacity:1}}
+.cell-tip{
+  position:absolute;bottom:130%;left:50%;transform:translateX(-50%);
+  background:#000;color:#fff;font-family:var(--mono);font-size:10.5px;padding:5px 8px;border-radius:6px;
+  white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .12s ease;z-index:5;
+}
+.cell:hover .cell-tip{opacity:1}
+.heat-legend{display:flex;align-items:center;gap:6px;margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--text-dimmer);justify-content:flex-end}
+.legend-cell{width:12px;height:12px;border-radius:3px}
+
+/* ---------- Modules ---------- */
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{
+  font-family:var(--mono);font-size:12.5px;background:var(--panel-2);border:1px solid var(--border);
+  padding:7px 13px;border-radius:20px;color:var(--text-dim);transition:.2s ease;
+}
+.badge:hover{border-color:var(--m5);color:var(--text);transform:translateY(-2px)}
+
+/* ---------- Tables ---------- */
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{border-bottom:1px solid var(--border-soft);padding:11px 12px;text-align:left}
+th{background:var(--panel-2);color:var(--text-dim);font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+tr td:first-child{font-family:var(--mono);color:var(--m5);font-weight:600;white-space:nowrap}
+tbody tr{transition:background .15s ease}
+tbody tr:hover{background:var(--panel-2)}
+
+/* ---------- Syllabus accordion ---------- */
+.month-block{border:1px solid var(--border-soft);border-radius:12px;overflow:hidden;margin-bottom:14px;background:var(--panel-2)}
+.month-head{
+  display:flex;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer;user-select:none;
+}
+.month-head:hover{background:rgba(255,255,255,.02)}
+.month-head-left{display:flex;align-items:center;gap:12px}
+.month-dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
+.month-head h3{margin:0;font-size:14.5px;font-weight:700}
+.month-head .m-sub{font-size:12px;color:var(--text-dim);font-family:var(--mono);margin-top:2px}
+.chev{color:var(--text-dim);transition:transform .3s ease;font-size:13px}
+.month-block.open .chev{transform:rotate(180deg)}
+.month-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.month-block.open .month-body{max-height:4000px}
+.sprint{padding:14px 18px 4px}
+.sprint-title{font-family:var(--mono);font-size:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;margin:10px 0 8px;padding-top:10px;border-top:1px solid var(--border-soft)}
+.sprint:first-child .sprint-title{border-top:none;padding-top:0;margin-top:0}
+.day-row{display:flex;align-items:flex-start;gap:12px;padding:8px 0}
+.day-check{
+  width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border);background:transparent;
+  cursor:pointer;flex:0 0 auto;margin-top:2px;transition:.15s ease;display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:#0a0c11;
+}
+.day-check.checked{background:linear-gradient(90deg,var(--m3),var(--m5));border-color:transparent}
+.day-num{font-family:var(--mono);font-size:12.5px;color:var(--text-dim);flex:0 0 46px}
+.day-text .day-t{font-size:13.5px;font-weight:600;margin:0}
+.day-text .day-h{font-size:12.5px;color:var(--text-dim);margin:2px 0 0}
+.day-row.checked .day-t{color:var(--text-dimmer);text-decoration:line-through;text-decoration-color:var(--border)}
+
+/* ---------- Footer / quote ---------- */
+footer{max-width:1180px;margin:0 auto;padding:0 20px 60px;text-align:center}
+.quote-box{font-family:var(--mono);font-size:13px;color:var(--text-dim);border:1px dashed var(--border);border-radius:10px;padding:16px;background:var(--panel)}
+.quote-btn{background:none;border:1px solid var(--border);color:var(--text-dim);font-family:var(--mono);font-size:11.5px;padding:7px 12px;border-radius:7px;cursor:pointer;margin-top:10px;transition:.15s}
+.quote-btn:hover{border-color:var(--m5);color:var(--text)}
+.note{font-size:11.5px;color:var(--text-dimmer);margin-top:10px}
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">150-Day Transition Plan</p>
+  <h1>Java Developer → AI Engineer → LLM Engineer</h1>
+  <p class="subtitle">// five months, five modules, one commit at a time</p>
+  <div class="journey-track"></div>
+  <div class="journey-labels">
+    <span>Java / Python</span><span>ML</span><span>Transformers</span><span>RAG</span><span>Agents / MLOps</span>
+  </div>
+</header>
+
+<main>
+
+  <div class="card" style="animation-delay:.05s">
+    <h2>📍 Today</h2>
+    <p class="card-sub">Your current position in the roadmap</p>
+    <div class="today-panel">
+      <div class="today-day" id="todayDayNum">01</div>
+      <div class="today-info">
+        <p class="t-title" id="todayTitle">Python setup, syntax & variables</p>
+        <p class="t-task" id="todayTask">Install Python, set up your editor, run your first scripts.</p>
+      </div>
+      <button class="mark-btn" id="markBtn">Mark Day Complete</button>
+    </div>
+
+    <div class="stat-row" style="margin-top:18px">
+      <div class="stat"><div class="num" id="statDone">0</div><div class="lbl">Days Done</div></div>
+      <div class="stat"><div class="num" id="statStreak">0</div><div class="lbl">Streak</div></div>
+      <div class="stat"><div class="num" id="statPct">0%</div><div class="lbl">Complete</div></div>
+      <div class="stat"><div class="num" id="statMonth">1 / 5</div><div class="lbl">Module</div></div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <div class="progress-txt"><span id="progressTxt">0 / 150 days</span><span id="etaTxt">150 days remaining</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:.1s">
+    <h2>🔥 Progress Heatmap</h2>
+    <p class="card-sub">Click any cell to toggle a day complete — one row per month</p>
+    <div class="heatmap" id="heatmap"></div>
+    <div class="heat-legend">
+      <span>Less</span>
+      <div class="legend-cell" style="background:#1a1f2c"></div>
+      <div class="legend-cell" style="background:var(--m1);opacity:.4"></div>
+      <div class="legend-cell" style="background:var(--m3);opacity:.7"></div>
+      <div class="legend-cell" style="background:var(--m5)"></div>
+      <span>Done</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:.15s">
+    <h2>🧩 Modules Covered</h2>
+    <div class="badges">
+      <span class="badge">Python</span><span class="badge">Math</span><span class="badge">Machine Learning</span>
+      <span class="badge">Deep Learning</span><span class="badge">PyTorch</span><span class="badge">NLP</span>
+      <span class="badge">Transformers</span><span class="badge">LLMs</span><span class="badge">Embeddings</span>
+      <span class="badge">Vector DB</span><span class="badge">RAG</span><span class="badge">FastAPI</span>
+      <span class="badge">Agents</span><span class="badge">Fine-tuning</span><span class="badge">MLOps</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:.2s">
+    <h2>🗓️ Monthly Roadmap</h2>
+    <table>
+      <tr><th>Month</th><th>Focus</th><th>Outcome</th></tr>
+      <tr><td>01</td><td>Python, Math, Machine Learning</td><td>Ship classical ML pipelines confidently</td></tr>
+      <tr><td>02</td><td>Deep Learning, PyTorch, NLP</td><td>Train CNNs/RNNs and understand embeddings</td></tr>
+      <tr><td>03</td><td>Transformers, LLM Internals</td><td>Understand attention & how GPT/BERT actually work</td></tr>
+      <tr><td>04</td><td>Embeddings, Vector DB, RAG</td><td>Build a production-grade RAG chatbot</td></tr>
+      <tr><td>05</td><td>Agents, FastAPI, Fine-tuning, MLOps</td><td>Ship a deployed, agentic AI product</td></tr>
+    </table>
+  </div>
+
+  <div class="card" style="animation-delay:.25s">
+    <h2>📚 Full Syllabus — Day by Day</h2>
+    <p class="card-sub">15 ten-day sprints across 5 modules. Click a month to expand.</p>
+    <div id="syllabus"></div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="quote-box" id="quoteBox">"Talk is cheap. Show me the code." — Linus Torvalds</div>
+  <button class="quote-btn" id="quoteBtn">// git log --next-quote</button>
+  <p class="note">Progress is stored in memory for this session only — this page doesn't use browser storage, so refreshing will reset your checkmarks. Download and re-open the file to start a fresh session anytime.</p>
+</footer>
+
+<script>
+/* ================= DATA ================= */
+const segments = [
+  {title:"Python Fundamentals", days:[
+    ["Python setup, syntax & variables","Install Python, set up your editor, run your first scripts."],
+    ["Control flow — if/else, loops, comprehensions","Rewrite 5 loop-based snippets as comprehensions."],
+    ["Functions, *args/**kwargs, scope","Write a small utility library of reusable functions."],
+    ["Data structures deep dive","Lists, tuples, dicts, sets — practice 10 manipulation drills."],
+    ["OOP in Python","Classes & inheritance, compared directly against Java's model."],
+    ["Exception handling & context managers","Use try/except/finally and the `with` statement properly."],
+    ["File I/O, JSON, requests","Read/write files and call a public REST API."],
+    ["Modules, packages, venvs, pip","Structure a multi-file project with a virtual environment."],
+    ["Decorators, generators, iterators","Write a custom decorator and a generator-based pipeline."],
+    ["Mini project + review","Build a CLI expense tracker. Review week 1 concepts."]
+  ]},
+  {title:"NumPy, Pandas & Linear Algebra", days:[
+    ["NumPy arrays, indexing, broadcasting","Practice slicing, reshaping and broadcasting rules."],
+    ["Vectorized ops, random, linspace","Replace 5 Python loops with vectorized NumPy code."],
+    ["Linear algebra basics","Vectors, matrices, dot product — by hand and in NumPy."],
+    ["Matrix operations","Transpose, inverse, determinant, and why they matter for ML."],
+    ["Eigenvalues & eigenvectors","Build intuition with 2D visualizations."],
+    ["Pandas Series & DataFrame basics","Load a CSV and explore rows, columns, dtypes."],
+    ["Pandas — filter, group, merge","Practice groupby, merge/join, and pivot tables."],
+    ["Data cleaning & EDA","Handle missing values, outliers, and duplicate records."],
+    ["Matplotlib / Seaborn basics","Plot distributions, correlations, and trends."],
+    ["Mini project + review","Full EDA report on a real dataset (Titanic or housing prices)."]
+  ]},
+  {title:"Machine Learning Basics", days:[
+    ["Supervised vs unsupervised vs RL","Map ML problem types to real-world use cases."],
+    ["Linear Regression from scratch","Implement gradient descent for linear regression in NumPy."],
+    ["Linear Regression with scikit-learn","Compare your from-scratch model to sklearn's."],
+    ["Logistic Regression & classification metrics","Precision, recall, F1, ROC-AUC — compute them by hand."],
+    ["Decision Trees & Random Forests","Train and visualize a decision tree; tune a forest."],
+    ["SVM & KNN","Implement both on the same dataset and compare boundaries."],
+    ["Model evaluation","Cross-validation, train/test split, over/underfitting."],
+    ["Feature engineering & scaling","Standardization, encoding categoricals, feature selection."],
+    ["Clustering — K-Means","Unsupervised segmentation on a real dataset."],
+    ["Mini project + review","End-to-end ML pipeline on a Kaggle dataset, month 1 recap."]
+  ]},
+  {title:"Neural Networks", days:[
+    ["The perceptron","Biological neuron analogy → single-layer perceptron in NumPy."],
+    ["Forward propagation math","Trace the math for a 2-layer network by hand."],
+    ["Activation functions","Implement ReLU, sigmoid, softmax and plot their curves."],
+    ["Loss functions & gradient descent","MSE, cross-entropy, and gradient descent intuition."],
+    ["Backpropagation — the chain rule","Derive backprop for a tiny network step by step."],
+    ["Intro to PyTorch — tensors","Tensor creation, ops, GPU vs CPU device basics."],
+    ["PyTorch autograd","Understand `.backward()` and computation graphs."],
+    ["Your first neural net in PyTorch","Build a feedforward net with `nn.Module`."],
+    ["Training loop & optimizers","SGD vs Adam — write a full train/eval loop."],
+    ["Mini project + review","MNIST digit classifier from scratch in PyTorch."]
+  ]},
+  {title:"CNN, RNN & LSTM", days:[
+    ["Convolution operation intuition","Visualize filters sliding over an image manually."],
+    ["CNN architecture","Filters, pooling, stride, padding — build the intuition."],
+    ["Build a CNN in PyTorch","Image classifier on CIFAR-10 or a custom dataset."],
+    ["Transfer learning","Fine-tune a pretrained ResNet on your own images."],
+    ["Sequence data & why RNNs","Understand what breaks feedforward nets on sequences."],
+    ["RNN architecture & vanishing gradients","Implement a vanilla RNN and see it fail on long sequences."],
+    ["LSTM & GRU internals","Gates explained — forget, input, output."],
+    ["Build an LSTM text classifier","Sentiment classification with an LSTM in PyTorch."],
+    ["Time-series / sequence project","Apply RNN/LSTM to a forecasting or tagging task."],
+    ["Mini project + review","Ship an image or text classifier. Month 2 recap."]
+  ]},
+  {title:"NLP + Embeddings", days:[
+    ["NLP pipeline basics","Tokenization, stemming, lemmatization with spaCy/NLTK."],
+    ["Bag of Words & TF-IDF","Vectorize text and inspect the resulting feature space."],
+    ["Word2Vec intuition","Skip-gram vs CBOW — train a tiny Word2Vec model."],
+    ["GloVe & pretrained embeddings","Load pretrained vectors and explore word analogies."],
+    ["Cosine similarity & semantic search","Rank sentences by embedding similarity."],
+    ["Text classification with embeddings","Feed embeddings into a classifier instead of TF-IDF."],
+    ["NER & POS tagging","Extract entities and tags with spaCy."],
+    ["Sentiment analysis project","Full pipeline: clean → embed → classify → evaluate."],
+    ["Intro to Hugging Face transformers","Load a pretrained model with `pipeline()`."],
+    ["Mini project + review","Build a sentence-similarity search app."]
+  ]},
+  {title:"Attention + Transformers", days:[
+    ["Why attention — RNN limitations","List the specific failure modes attention solves."],
+    ["Self-attention, step by step","Walk through the mechanism on a toy sentence."],
+    ["Query, Key, Value math","Compute QKV attention scores by hand for a mini example."],
+    ["Multi-head attention","Understand why multiple heads outperform one."],
+    ["Positional encoding","Sinusoidal encodings — why order needs to be injected."],
+    ["Transformer encoder architecture","Layer norm, residuals, feed-forward blocks."],
+    ["Transformer decoder & encoder-decoder","Masked attention and cross-attention."],
+    ["Implement scaled dot-product attention","Code it from scratch in PyTorch, no libraries."],
+    ["Build a mini-transformer block","Stack your attention + FFN into a full block."],
+    ["Mini project + review","Visualize attention weights on real sentences."]
+  ]},
+  {title:"GPT, BERT & Tokenizers", days:[
+    ["BERT architecture","Masked language modeling & next-sentence prediction."],
+    ["Fine-tune BERT for classification","Fine-tune on a text classification dataset via HF."],
+    ["GPT architecture","Autoregressive decoding and causal masking."],
+    ["Byte-Pair Encoding internals","Understand subword tokenization step by step."],
+    ["Build a tokenizer from scratch","Implement a basic BPE tokenizer in Python."],
+    ["Sampling strategies","Greedy, beam search, top-k, top-p, temperature — compare outputs."],
+    ["BERT vs GPT vs T5","Map encoder-only / decoder-only / encoder-decoder to use cases."],
+    ["HF datasets & Trainer API","Fine-tune using the high-level Trainer class."],
+    ["Prompting an open-source LLM","Run a local or hosted open model, write structured prompts."],
+    ["Mini project + review","Fine-tune a small model on your own custom text data."]
+  ]},
+  {title:"LLM Internals", days:[
+    ["Inference pipeline deep dive","Trace a prompt from tokens to logits to output text."],
+    ["KV cache","Why it exists and how it speeds up autoregressive generation."],
+    ["Context windows & position schemes","RoPE and ALiBi — intuition, not derivation."],
+    ["Quantization basics","int8/int4, GGUF, bitsandbytes — trade-offs explained."],
+    ["Running local LLMs","Set up Ollama or llama.cpp and run a 7B model locally."],
+    ["LoRA & PEFT concepts","Why parameter-efficient fine-tuning works."],
+    ["Serving basics","How a model gets exposed behind an API endpoint."],
+    ["Latency, throughput & batching","Understand what production LLM serving optimizes for."],
+    ["Token economics","Estimate real cost/latency trade-offs across model providers."],
+    ["Mini project + review","Benchmark a local LLM against a hosted API model."]
+  ]},
+  {title:"Embeddings + FAISS", days:[
+    ["Embedding models deep-dive","Compare OpenAI, Cohere, and open-source embedding models."],
+    ["Chunking strategies","Fixed-size vs semantic chunking for long documents."],
+    ["FAISS basics","Flat, IVF, and HNSW index types explained."],
+    ["Build a semantic search engine","Index and query documents with FAISS."],
+    ["Evaluating retrieval quality","Recall@k and precision — measure your search engine."],
+    ["Hybrid search","Combine keyword (BM25) with vector search."],
+    ["Re-ranking with cross-encoders","Add a re-ranking stage to improve top results."],
+    ["Metadata filtering","Filter vector search results by structured metadata."],
+    ["Scaling ANN search","Trade-offs between exact and approximate nearest neighbors."],
+    ["Mini project + review","Semantic search over your own document collection."]
+  ]},
+  {title:"Vector Databases", days:[
+    ["Vector DB landscape","Qdrant, Chroma, Pinecone, Weaviate — how they differ."],
+    ["Set up Chroma locally","CRUD operations against a local Chroma collection."],
+    ["Set up Qdrant","Collections, payloads, and filtering with Qdrant."],
+    ["Indexing strategies in production","Choose index types for your data scale."],
+    ["Multi-tenancy & namespaces","Isolate data per user/tenant in a vector DB."],
+    ["Backup, persistence & scaling","Plan for durability and horizontal scale."],
+    ["Connect DB to embedding pipeline","Wire ingestion straight into your vector store."],
+    ["Benchmark Chroma vs Qdrant","Compare latency and recall on your own dataset."],
+    ["Build an ingestion pipeline","Docs → chunks → embeddings → DB, fully automated."],
+    ["Mini project + review","Ship a standalone document ingestion service."]
+  ]},
+  {title:"Production RAG", days:[
+    ["RAG architecture end-to-end","Map the full retrieve-then-generate pipeline."],
+    ["Prompt engineering for RAG","Design context-injection prompts that reduce hallucination."],
+    ["Long & multi-document retrieval","Handle documents that exceed a single context window."],
+    ["Citations & source attribution","Return answers with traceable source references."],
+    ["Evaluating RAG quality","Faithfulness, relevance, and hallucination checks."],
+    ["Conversation memory","Support multi-turn RAG conversations."],
+    ["Guardrails & 'I don't know'","Design refusal behavior when retrieval is weak."],
+    ["Streaming responses","Stream tokens to a frontend as they're generated."],
+    ["Building the PDF chatbot backend","Wire ingestion, retrieval and generation together."],
+    ["Capstone: PDF chatbot","Ship a working RAG chatbot end to end."]
+  ]},
+  {title:"FastAPI + AI APIs", days:[
+    ["FastAPI basics","Routes, path params, query params."],
+    ["Pydantic models & validation","Type-safe request/response schemas."],
+    ["Async endpoints & background tasks","Non-blocking I/O for LLM calls."],
+    ["Streaming responses (SSE)","Stream LLM tokens over server-sent events."],
+    ["Authentication basics","API keys and JWT-based auth."],
+    ["Connect FastAPI to your RAG pipeline","Expose your capstone RAG chatbot as an API."],
+    ["Error handling, logging, rate limiting","Make the API production-safe."],
+    ["OpenAPI docs & testing","Auto-generated docs plus automated tests."],
+    ["Dockerizing a FastAPI app","Write a Dockerfile and run it in a container."],
+    ["Mini project + review","Production-style REST API in front of your RAG app."]
+  ]},
+  {title:"Agents + LangGraph", days:[
+    ["What is an agent — ReAct","Reasoning + acting loop explained with an example."],
+    ["Tool / function calling","Give an LLM callable tools and parse its tool calls."],
+    ["Intro to LangChain","Chains, tools, and basic agent constructs."],
+    ["Intro to LangGraph","Model an agent as a state graph."],
+    ["Building a multi-step agent","Planner + executor pattern on a real task."],
+    ["Multi-agent orchestration","Coordinate multiple specialized agents."],
+    ["Memory in agents","Short-term vs long-term memory strategies."],
+    ["Agent evaluation & tracing","Debug agent runs with tracing tools."],
+    ["Handling failures & retries","Make agent execution resilient."],
+    ["Mini project + review","Ship a multi-agent research/task assistant."]
+  ]},
+  {title:"Fine-tuning, Docker & MLOps", days:[
+    ["Fine-tuning vs RAG vs prompting","Decide which technique fits which problem."],
+    ["Full fine-tuning vs LoRA/QLoRA","Compare cost, quality and setup complexity."],
+    ["Preparing a fine-tuning dataset","Clean and format data for supervised fine-tuning."],
+    ["Fine-tune with LoRA","Fine-tune an open-source LLM on your dataset."],
+    ["Docker fundamentals for ML apps","Images, containers, volumes — the essentials."],
+    ["Docker Compose multi-container app","Wire together API + DB + vector store."],
+    ["CI/CD basics for ML projects","Automate tests and deployments on push."],
+    ["Monitoring & observability","Logging, metrics, and tracing in production."],
+    ["Cloud deployment walkthrough","Deploy your app to a cloud provider."],
+    ["Capstone: Deploy & document","Ship your full AI Engineer project with a portfolio writeup."]
+  ]}
+];
+
+// Flatten into 150-day list
+const allDays = [];
+segments.forEach((seg, si) => {
+  seg.days.forEach((d, di) => {
+    allDays.push({
+      day: si*10 + di + 1,
+      month: Math.floor(si/3) + 1,
+      sprint: si + 1,
+      sprintTitle: seg.title,
+      title: d[0],
+      task: d[1]
+    });
+  });
+});
+
+const monthMeta = {
+  1:{name:"Month 1 — Python, Math & ML", color:"var(--m1)"},
+  2:{name:"Month 2 — Deep Learning, PyTorch, NLP", color:"var(--m2)"},
+  3:{name:"Month 3 — Transformers & LLM Internals", color:"var(--m3)"},
+  4:{name:"Month 4 — Embeddings, Vector DB, RAG", color:"var(--m4)"},
+  5:{name:"Month 5 — Agents, FastAPI, Fine-tuning, MLOps", color:"var(--m5)"}
+};
+
+/* ================= STATE (in-memory only, no browser storage) ================= */
+const state = { completed: new Set() };
+
+function colorForDay(day){
+  // interpolate across 5 stops based on day position
+  const stops = ["#f89820","#f2734f","#b968c7","#6f7ff5","#22d3ee"];
+  const pos = (day-1)/149 * (stops.length-1);
+  const i = Math.min(Math.floor(pos), stops.length-2);
+  const frac = pos - i;
+  const c1 = hexToRgb(stops[i]), c2 = hexToRgb(stops[i+1]);
+  const r = Math.round(c1[0]+(c2[0]-c1[0])*frac);
+  const g = Math.round(c1[1]+(c2[1]-c1[1])*frac);
+  const b = Math.round(c1[2]+(c2[2]-c1[2])*frac);
+  return `rgb(${r},${g},${b})`;
+}
+function hexToRgb(hex){
+  const v = hex.replace('#','');
+  return [parseInt(v.substring(0,2),16), parseInt(v.substring(2,4),16), parseInt(v.substring(4,6),16)];
+}
+
+/* ================= RENDER: HEATMAP ================= */
+const heatmapEl = document.getElementById('heatmap');
+for(let m=1;m<=5;m++){
+  const row = document.createElement('div');
+  row.className = 'heat-row';
+  const label = document.createElement('div');
+  label.className = 'heat-label';
+  label.textContent = monthMeta[m].name.split(' — ')[1];
+  row.appendChild(label);
+
+  const cellsWrap = document.createElement('div');
+  cellsWrap.className = 'heat-cells';
+  const monthDays = allDays.filter(d => d.month === m);
+  monthDays.forEach((d, idx) => {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.dataset.day = d.day;
+    cell.style.animationDelay = (idx*4) + 'ms';
+    cell.style.background = '#1a1f2c';
+    const tip = document.createElement('div');
+    tip.className = 'cell-tip';
+    tip.textContent = `Day ${d.day}: ${d.title}`;
+    cell.appendChild(tip);
+    cell.addEventListener('click', () => toggleDay(d.day));
+    cellsWrap.appendChild(cell);
+  });
+  row.appendChild(cellsWrap);
+  heatmapEl.appendChild(row);
+}
+
+/* ================= RENDER: SYLLABUS ================= */
+const syllabusEl = document.getElementById('syllabus');
+for(let m=1;m<=5;m++){
+  const block = document.createElement('div');
+  block.className = 'month-block';
+  const meta = monthMeta[m];
+  const head = document.createElement('div');
+  head.className = 'month-head';
+  head.innerHTML = `
+    <div class="month-head-left">
+      <div class="month-dot" style="background:${meta.color}"></div>
+      <div>
+        <h3>${meta.name}</h3>
+        <div class="m-sub">Days ${(m-1)*30+1}–${m*30}</div>
+      </div>
+    </div>
+    <div class="chev">▼</div>`;
+  head.addEventListener('click', () => block.classList.toggle('open'));
+  block.appendChild(head);
+
+  const body = document.createElement('div');
+  body.className = 'month-body';
+
+  const monthSegments = segments.slice((m-1)*3, (m-1)*3+3);
+  monthSegments.forEach((seg, si) => {
+    const globalSprintIdx = (m-1)*3 + si;
+    const sprintTitleEl = document.createElement('div');
+    const sprint = document.createElement('div');
+    sprint.className = 'sprint';
+    const titleEl = document.createElement('div');
+    titleEl.className = 'sprint-title';
+    const startDay = globalSprintIdx*10+1, endDay = globalSprintIdx*10+10;
+    titleEl.textContent = `Sprint ${globalSprintIdx+1} · Days ${startDay}–${endDay} · ${seg.title}`;
+    sprint.appendChild(titleEl);
+
+    seg.days.forEach((d, di) => {
+      const dayNum = globalSprintIdx*10 + di + 1;
+      const row = document.createElement('div');
+      row.className = 'day-row';
+      row.dataset.day = dayNum;
+      row.innerHTML = `
+        <div class="day-check" data-day="${dayNum}"></div>
+        <div class="day-num">Day ${String(dayNum).padStart(3,'0')}</div>
+        <div class="day-text">
+          <p class="day-t">${d[0]}</p>
+          <p class="day-h">${d[1]}</p>
+        </div>`;
+      row.querySelector('.day-check').addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleDay(dayNum);
+      });
+      sprint.appendChild(row);
+    });
+    body.appendChild(sprint);
+  });
+  block.appendChild(body);
+  syllabusEl.appendChild(block);
+}
+// open month 1 by default
+syllabusEl.querySelector('.month-block').classList.add('open');
+
+/* ================= TOGGLE / SYNC ================= */
+function toggleDay(day){
+  if(state.completed.has(day)) state.completed.delete(day);
+  else state.completed.add(day);
+  syncUI();
+}
+
+function syncUI(){
+  const doneCount = state.completed.size;
+  const pct = Math.round(doneCount/150*100);
+
+  // heatmap cells
+  document.querySelectorAll('.cell').forEach(c => {
+    const day = parseInt(c.dataset.day);
+    const done = state.completed.has(day);
+    c.classList.toggle('done', done);
+    c.style.background = done ? colorForDay(day) : '#1a1f2c';
+  });
+
+  // day rows + checkboxes
+  document.querySelectorAll('.day-row').forEach(r => {
+    const day = parseInt(r.dataset.day);
+    r.classList.toggle('checked', state.completed.has(day));
+  });
+  document.querySelectorAll('.day-check').forEach(c => {
+    const day = parseInt(c.dataset.day);
+    const done = state.completed.has(day);
+    c.classList.toggle('checked', done);
+    c.textContent = done ? '✓' : '';
+  });
+
+  // progress bar + stats
+  document.getElementById('bar').style.width = pct + '%';
+  document.getElementById('progressTxt').textContent = `${doneCount} / 150 days`;
+  document.getElementById('etaTxt').textContent = `${150-doneCount} days remaining`;
+  document.getElementById('statDone').textContent = doneCount;
+  document.getElementById('statPct').textContent = pct + '%';
+
+  // streak: longest consecutive run ending at highest completed day, simple heuristic
+  let streak = 0;
+  for(let d=150; d>=1; d--){
+    if(state.completed.has(d)) streak++;
+    else if(d < 150) break;
+  }
+  document.getElementById('statStreak').textContent = streak;
+
+  // current month = lowest incomplete day's month, else 5
+  let nextDay = 1;
+  for(let d=1; d<=150; d++){ if(!state.completed.has(d)){ nextDay = d; break; } if(d===150) nextDay = 150; }
+  const nextMeta = allDays.find(x => x.day === nextDay);
+  document.getElementById('statMonth').textContent = `${nextMeta.month} / 5`;
+
+  // today panel
+  document.getElementById('todayDayNum').textContent = String(nextDay).padStart(2,'0');
+  document.getElementById('todayTitle').textContent = nextMeta.title;
+  document.getElementById('todayTask').textContent = nextMeta.task;
+  const markBtn = document.getElementById('markBtn');
+  const isDone = state.completed.has(nextDay);
+  markBtn.textContent = isDone ? '✓ Marked Complete' : 'Mark Day Complete';
+  markBtn.classList.toggle('done', isDone);
+  markBtn.onclick = () => toggleDay(nextDay);
+}
+
+syncUI();
+
+/* ================= QUOTES ================= */
+const quotes = [
+  '"Talk is cheap. Show me the code." — Linus Torvalds',
+  '"Premature optimization is the root of all evil." — Donald Knuth',
+  '"The best way to predict the future is to implement it." — Alan Kay',
+  '"Programs must be written for people to read." — Harold Abelson',
+  '"Simplicity is prerequisite for reliability." — Edsger Dijkstra',
+  '"First, solve the problem. Then, write the code." — John Johnson',
+  '"Attention is all you need." — Vaswani et al., 2017',
+  '"Data is the new oil; embeddings are the refinery." — unattributed'
+];
+document.getElementById('quoteBtn').addEventListener('click', () => {
+  const box = document.getElementById('quoteBox');
+  box.style.opacity = 0;
+  setTimeout(() => {
+    box.textContent = quotes[Math.floor(Math.random()*quotes.length)];
+    box.style.transition = 'opacity .3s ease';
+    box.style.opacity = 1;
+  }, 150);
+});
+</script>
+</body>
+</html>
