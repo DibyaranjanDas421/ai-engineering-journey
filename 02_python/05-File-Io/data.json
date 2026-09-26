@@ -1,0 +1,8 @@
+{
+    "name": "Dibyaranjan Das",
+    "isTeaacher": true,
+    "adderss": {
+        "city": "Delhi",
+        "country": "India"
+    }
+}
